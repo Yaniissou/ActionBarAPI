@@ -37,6 +37,7 @@ public class ActionBarTask extends BukkitRunnable {
             if (player == null) return;
 
             final List<ActionBarEntry> actionBarEntries = actionBarPlayer.getActionBarEntries();
+            if (actionBarEntries.isEmpty()) return;
             final String formattedActionBar = actionBarEntries.stream().map(ActionBarEntry::getValue).collect(Collectors.joining(SEPARATOR));
             ActionBarUtils.sendActionBar(player, formattedActionBar);
 
