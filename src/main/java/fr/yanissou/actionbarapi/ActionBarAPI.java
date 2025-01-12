@@ -51,5 +51,10 @@ public interface ActionBarAPI {
      */
     void removeEntry(final UUID playerUuid, final String key);
 
+    /**
+     * Get the entries of the action bar of a player
+     * @param playerUuid
+     * @return
+     */
     List<ActionBarEntry> getEntries(final UUID playerUuid);
 }
