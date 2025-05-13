@@ -1,5 +1,6 @@
 package fr.yanissou.actionbarapi.tasks;
 
+import fr.yanissou.actionbarapi.ActionBarAPI;
 import fr.yanissou.actionbarapi.managers.ActionBarManager;
 import fr.yanissou.actionbarapi.model.ActionBarEntry;
 import fr.yanissou.actionbarapi.utils.ActionBarUtils;
@@ -18,10 +19,6 @@ import java.util.stream.Collectors;
  */
 public class ActionBarTask extends BukkitRunnable {
 
-    /**
-     * The separator between each action bar entry
-     */
-    static String SEPARATOR = " §8▎§r ";
 
     private final ActionBarManager actionBarManager;
 
@@ -38,7 +35,8 @@ public class ActionBarTask extends BukkitRunnable {
 
             final List<ActionBarEntry> actionBarEntries = actionBarPlayer.getActionBarEntries();
             if (actionBarEntries.isEmpty()) return;
-            final String formattedActionBar = actionBarEntries.stream().map(ActionBarEntry::getValue).collect(Collectors.joining(SEPARATOR));
+            final String formattedActionBar = actionBarEntries.stream().map(ActionBarEntry::getValue).collect(Collectors.joining(
+                ActionBarAPI.SEPARATOR));
             ActionBarUtils.sendActionBar(player, formattedActionBar);
 
             // Remove expired entries

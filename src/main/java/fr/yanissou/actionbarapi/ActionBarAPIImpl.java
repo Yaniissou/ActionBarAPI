@@ -3,6 +3,10 @@ package fr.yanissou.actionbarapi;
 import fr.yanissou.actionbarapi.managers.ActionBarManager;
 import fr.yanissou.actionbarapi.model.ActionBarEntry;
 import fr.yanissou.actionbarapi.model.ActionBarPlayer;
+import fr.yanissou.actionbarapi.utils.ActionBarUtils;
+import java.util.stream.Collectors;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicesManager;
 
@@ -13,6 +17,7 @@ import java.util.UUID;
 public class ActionBarAPIImpl implements ActionBarAPI {
 
     private final Plugin plugin;
+
     public ActionBarAPIImpl(Plugin plugin) {
         this.plugin = plugin;
     }
@@ -51,5 +56,28 @@ public class ActionBarAPIImpl implements ActionBarAPI {
             return null;
         }
         return actionBarPlayer.getActionBarEntries();
+    }
+
+    @Override
+    public void update(final UUID playerUuid) {
+        final ServicesManager servicesManager = this.plugin.getServer().getServicesManager();
+        final ActionBarManager actionBarManager = Objects.requireNonNull(servicesManager.load(ActionBarManager.class));
+        final ActionBarPlayer actionBarPlayer = actionBarManager.getActionBarPlayer(playerUuid);
+
+        Player player = Bukkit.getPlayer(actionBarPlayer.getUniqueId());
+        if (player == null) {
+            return;
+        }
+
+        final List<ActionBarEntry> actionBarEntries = actionBarPlayer.getActionBarEntries();
+        if (actionBarEntries.isEmpty()) {
+            return;
+        }
+        final String formattedActionBar = actionBarEntries.stream().map(ActionBarEntry::getValue).collect(
+            Collectors.joining(ActionBarAPI.SEPARATOR));
+        ActionBarUtils.sendActionBar(player, formattedActionBar);
+
+        // Remove expired entries
+        actionBarEntries.removeIf(ActionBarEntry::isExpired);
     }
 }
