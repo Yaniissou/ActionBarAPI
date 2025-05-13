@@ -15,6 +15,12 @@ import java.util.UUID;
 
 public interface ActionBarAPI {
 
+
+    /**
+     * The separator between each action bar entry
+     */
+    public static final String SEPARATOR = " §8▎§r ";
+
     /**
      * Get the instance of the ActionBarAPI
      * @return the instance of the ActionBarAPI
@@ -57,4 +63,10 @@ public interface ActionBarAPI {
      * @return
      */
     List<ActionBarEntry> getEntries(final UUID playerUuid);
+
+    /**
+     * Force resend the action bar to a player
+     * @param playerUuid the UUID of the player
+     */
+    void update(final UUID playerUuid);
 }
