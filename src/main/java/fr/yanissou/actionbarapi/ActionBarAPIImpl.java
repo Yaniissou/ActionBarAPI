@@ -73,8 +73,7 @@ public class ActionBarAPIImpl implements ActionBarAPI {
         if (actionBarEntries.isEmpty()) {
             return;
         }
-        final String formattedActionBar = actionBarEntries.stream().map(ActionBarEntry::getValue).collect(
-            Collectors.joining(ActionBarAPI.SEPARATOR));
+        final String formattedActionBar = ActionBarUtils.formatActionBar(actionBarEntries);
         ActionBarUtils.sendActionBar(player, formattedActionBar);
 
         // Remove expired entries

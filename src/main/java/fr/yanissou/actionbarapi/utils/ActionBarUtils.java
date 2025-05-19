@@ -1,5 +1,9 @@
 package fr.yanissou.actionbarapi.utils;
 
+import fr.yanissou.actionbarapi.ActionBarAPI;
+import fr.yanissou.actionbarapi.model.ActionBarEntry;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
@@ -9,7 +13,8 @@ public class ActionBarUtils {
 
     /**
      * Send an action bar message to a player
-     * @param player the player to send the action bar message to
+     *
+     * @param player  the player to send the action bar message to
      * @param message the message to send
      */
     public static void sendActionBar(Player player, String message) {
@@ -26,7 +31,8 @@ public class ActionBarUtils {
 
             // Construire le packet PacketPlayOutChat
             final Class<?> packetPlayOutChatClass = getNMSClass("PacketPlayOutChat");
-            final Constructor<?> packetConstructor = packetPlayOutChatClass.getConstructor(chatBaseComponentClass, byte.class);
+            final Constructor<?> packetConstructor = packetPlayOutChatClass.getConstructor(chatBaseComponentClass,
+                byte.class);
             final Object packet = packetConstructor.newInstance(chatBaseComponent, (byte) 2);
 
             // Envoyer le packet
@@ -40,5 +46,13 @@ public class ActionBarUtils {
     private static Class<?> getNMSClass(String className) throws ClassNotFoundException {
         final String version = org.bukkit.Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
         return Class.forName("net.minecraft.server." + version + "." + className);
+    }
+
+
+    public static String formatActionBar(final List<ActionBarEntry> actionBarEntries) {
+        return actionBarEntries.stream().map(ActionBarEntry::getValue)
+            .filter(s -> !s.isEmpty()).collect(
+                Collectors.joining(
+                    ActionBarAPI.SEPARATOR));
     }
 }
