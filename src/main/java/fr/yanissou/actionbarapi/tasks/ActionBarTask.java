@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 /**
  * Task that sends the action bar to all players with an action bar
+ *
  * @see ActionBarUtils
  */
 public class ActionBarTask extends BukkitRunnable {
@@ -23,7 +24,8 @@ public class ActionBarTask extends BukkitRunnable {
     private final ActionBarManager actionBarManager;
 
     public ActionBarTask(Plugin plugin) {
-        this.actionBarManager = Objects.requireNonNull(plugin.getServer().getServicesManager().load(ActionBarManager.class));
+        this.actionBarManager = Objects.requireNonNull(
+            plugin.getServer().getServicesManager().load(ActionBarManager.class));
         runTaskTimer(plugin, 0, 20L);
     }
 
@@ -31,12 +33,15 @@ public class ActionBarTask extends BukkitRunnable {
     public void run() {
         this.actionBarManager.getActionBarPlayers().forEach(actionBarPlayer -> {
             Player player = Bukkit.getPlayer(actionBarPlayer.getUniqueId());
-            if (player == null) return;
+            if (player == null) {
+                return;
+            }
 
             final List<ActionBarEntry> actionBarEntries = actionBarPlayer.getActionBarEntries();
-            if (actionBarEntries.isEmpty()) return;
-            final String formattedActionBar = actionBarEntries.stream().map(ActionBarEntry::getValue).collect(Collectors.joining(
-                ActionBarAPI.SEPARATOR));
+            if (actionBarEntries.isEmpty()) {
+                return;
+            }
+            final String formattedActionBar = ActionBarUtils.formatActionBar(actionBarEntries);
             ActionBarUtils.sendActionBar(player, formattedActionBar);
 
             // Remove expired entries
