@@ -6,7 +6,7 @@
 
     <groupId>fr.yanissou</groupId>
     <artifactId>actionbarapi</artifactId>
-    <version>1.0.12</version>
+    <version>1.0.13</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
