@@ -51,7 +51,7 @@ public class ActionBarUtils {
 
     public static String formatActionBar(final List<ActionBarEntry> actionBarEntries) {
         return actionBarEntries.stream().map(ActionBarEntry::getValue)
-            .filter(String::isEmpty).collect(
+            .filter(s -> !s.isEmpty()).collect(
                 Collectors.joining(
                     ActionBarAPI.SEPARATOR));
     }
