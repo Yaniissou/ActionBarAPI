@@ -2,12 +2,11 @@ package fr.yanissou.actionbarapi.utils;
 
 import fr.yanissou.actionbarapi.ActionBarAPI;
 import fr.yanissou.actionbarapi.model.ActionBarEntry;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.bukkit.entity.Player;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
 
 public class ActionBarUtils {
 
@@ -51,7 +50,7 @@ public class ActionBarUtils {
 
     public static String formatActionBar(final List<ActionBarEntry> actionBarEntries, Player player) {
         return actionBarEntries.stream().map(actionBarEntry -> actionBarEntry.getValue(player))
-            .filter(s -> !s.isEmpty()).collect(
+            .filter(s -> s == null || !s.isEmpty()).collect(
                 Collectors.joining(
                     ActionBarAPI.SEPARATOR));
     }
