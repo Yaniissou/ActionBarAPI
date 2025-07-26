@@ -49,8 +49,8 @@ public class ActionBarUtils {
     }
 
 
-    public static String formatActionBar(final List<ActionBarEntry> actionBarEntries) {
-        return actionBarEntries.stream().map(ActionBarEntry::getValue)
+    public static String formatActionBar(final List<ActionBarEntry> actionBarEntries, Player player) {
+        return actionBarEntries.stream().map(actionBarEntry -> actionBarEntry.getValue(player))
             .filter(s -> !s.isEmpty()).collect(
                 Collectors.joining(
                     ActionBarAPI.SEPARATOR));

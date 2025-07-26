@@ -1,5 +1,8 @@
 package fr.yanissou.actionbarapi.model;
 
+import java.util.function.Supplier;
+import org.bukkit.entity.Player;
+
 /**
  * Represents an entry in the action bar.
  *
@@ -30,6 +33,11 @@ public class ActionBarEntry {
         this.timeleft = duration;
     }
 
+    // Backward compatibility
+    public ActionBarEntry(final String key, final Supplier<String> actionBarValue, final int duration) {
+        this(key, player -> actionBarValue.get(), duration);
+    }
+
     /**
      * Creates an action bar entry with a message and no duration.
      *
@@ -37,6 +45,11 @@ public class ActionBarEntry {
      */
     public ActionBarEntry(final String key, final ActionBarValue message) {
         this(key, message, -1);
+    }
+
+    // Backward compatibility
+    public ActionBarEntry(final String key, final Supplier<String> actionBarValue) {
+        this(key, player -> actionBarValue.get());
     }
 
     public String getKey() {
@@ -57,8 +70,8 @@ public class ActionBarEntry {
      *
      * @return the String value of the action bar entry
      */
-    public String getValue() {
-        return actionBarValue.getValue();
+    public String getValue(Player player) {
+        return actionBarValue.getValue(player);
     }
 
     /**
