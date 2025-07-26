@@ -50,7 +50,7 @@ public class ActionBarUtils {
 
     public static String formatActionBar(final List<ActionBarEntry> actionBarEntries, Player player) {
         return actionBarEntries.stream().map(actionBarEntry -> actionBarEntry.getValue(player))
-            .filter(s -> s == null || !s.isEmpty()).collect(
+            .filter(s -> s != null || !s.isEmpty()).collect(
                 Collectors.joining(
                     ActionBarAPI.SEPARATOR));
     }
