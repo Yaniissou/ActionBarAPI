@@ -34,12 +34,4 @@
         </dependency>
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/Yaniissou/ActionBarAPI</url>
-        </repository>
-    </distributionManagement>
-
-
 </project>
